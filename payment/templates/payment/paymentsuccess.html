@@ -1,0 +1,11 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+
+	<div class="text-center">	
+		<p class="h1">Payment successfull!</p>
+		<p>Order nr: {{order}}</p>
+		<p class="h3 m-5">Please return to your <a href="{% url 'view-order' %}">Orders</a> page to track its status</p>
+	</div>
+
+{% endblock content %} 

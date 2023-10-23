@@ -1,0 +1,109 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+        
+        <p class="h1">Unpaid orders:</p>
+        
+        {% for order in orders %}
+
+            {% if not order.paid  %}
+            
+                <div class="row border-top border-bottom border-dark mt-5 p-5">
+
+                    <form method="POST" action='remove_order/'>
+                            {% csrf_token %}
+                            <button style="position: relative; left:-60px; top:-50px; color: red;" type="submit" name="remove_order" value="{{order.id}}">X</button> 
+                    </form>
+
+                    <div class="col-md-2">
+                        <p class="fw-bold">Order Nr:</p>
+                        <p>{{order}}</p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <p class="fw-bold">Person:</p>
+                        <p class="d-inline">{{order.firstName}}</p>
+                        <p class="d-inline">{{order.secondName}}</p>
+                        <p>{{order.phone}}</p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <p class="fw-bold">Address:</p>
+                        <p class="d-inline">{{order.streethouseNumber}}, </p>
+                        <p class="d-inline">{{order.city}}</p>    
+                        <p>{{order.postal}}</p>                   
+                    </div>
+
+                     <div class="col-md-2">
+                        <p class="fw-bold">Items:</p>
+                        <select>
+                            {% for item in orderitems %}
+                                 {% if order == item.order %}
+                                      <option value="">{{item.product.title}}</option>
+                                {% endif %}
+                            {% endfor %}  
+                        </select>
+                     </div>
+                    
+                    <div class="col-md-2">
+                        <p class="fw-bold">Price:</p>
+                        <p>{{order.price}} €</p>
+                    </div>
+
+                     <div class="col-md-2">
+                         <form method="POST" action="{% url 'checkout' %}">
+                            {% csrf_token %}
+                            <button name="checkout" value='{{order}}'>Buy</button>
+                         </form>
+                    </div>
+                </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+{% endblock content %}
+
+{% block live_order %}
+
+    <p class="h1 mt-5">Paid orders:</p>
+
+    {% for order in orders %}
+
+        {% if order.paid %}
+
+            <div class="row border-top border-bottom border-dark mt-5 p-5">
+
+                <div class="col-md-4">
+                    <p class="fw-bold">Order Nr:</p>
+                    <p>{{order}}</p>
+                </div>
+
+                <div class="col-md-4">
+                        <p class="fw-bold">Items:</p>
+                        <select>
+                        {% for item in orderitems %}
+                             {% if order == item.order %}
+                                  <option value="">{{item.product.title}}</option>
+                            {% endif %}
+                        {% endfor %}  
+                        </select>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="fw-bold">Status:</p>
+                    {% if not order.processing_if_false %}
+                        <p>Processing order...</p>
+                    {% else %}
+                        <p>Processing completed</p>
+                    
+                    {% endif %}
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock live_order %}
