@@ -1,0 +1,24 @@
+{% extends 'home/base.html' %}
+
+{% block content%}
+
+	<div class="row mt-5">
+
+		<div class="col-sm-6 d-flex justify-content-center">
+			<img class="img-fluid" src="{{obj.image.url}}">
+		</div>
+
+		<div class="col-sm-6 text-center">
+			<p class="h1">{{obj.title}}</p>
+			<p>{{obj.description}}</p>
+			<p>{{obj.price}}</p>
+			<p>Quantity: {{obj.quantity}}</p>
+			<form method="POST" action="{% url 'dashboard' %}">
+				{% csrf_token %}
+				<button name="product_id" value="{{obj.id}}">Add to Cart</button>
+			</form>
+		</div>
+
+	</div>
+
+{% endblock content %}
