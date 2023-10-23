@@ -1,0 +1,38 @@
+
+{% extends 'home/base.html' %}
+
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div style="position: relative; top: 300px" class="container text-center content-section w-25 d-flex align-items-center">
+
+	
+
+	<form method="POST">
+
+		{% if messages %}
+			{% for message in messages %}
+				<p class="text-danger">{{ message }}</p>
+			{% endfor %}
+		{% endif %}
+
+		{% csrf_token %}
+		<fieldset class='form-group'>
+			<legend class='border-bottom mb-4'>Log In</legend>
+			{{ form|crispy }}
+		</fieldset>
+
+		<div class='form-group '>
+			<button class='btn btn-outline-secondary mt-3 ' type='submit'>Log in</button>
+		</div>
+
+		<p class="mt-4">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+
+
+	</form>
+</div>
+			
+{% endblock content %}

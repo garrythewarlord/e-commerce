@@ -1,0 +1,50 @@
+{% extends 'home/base.html' %}
+
+
+{% block content %}
+
+			
+
+
+	<div class="d-flex flex-column">
+
+		{% for item in cart_items %}	
+
+			<div class="d-flex justify-content-evenly align-items-center">
+				<img class="d-inline" style="width:100px; height: 100px" src="{{item.product.image.url}}">
+				<p class="d-inline">{{item.product.title}}</p>
+				<p>x1</p>
+				<p></p>
+				<form method="POST" action='remove_product/'>
+					{% csrf_token %}
+					<button type="submit" name="remove_product" value="{{item.id}}">Remove</button>	
+				</form>
+				
+			</div>
+
+
+		{% endfor %}
+
+
+		{% if count %}
+
+
+		<div class='row'>
+			
+			<div class="col-12 text-end">
+				<p class="d-inline" >Total Price: {{total_price}}</p>
+				<p class="d-inline">Total_Basket: {{count}}</p>
+			</div>
+
+
+			<div class="col-12 text-end mt-3">
+				<a class="btn btn-primary" style="width:100px;" href="{% url 'submit-order' %}" role="button">Next</a>
+			</div>
+
+		</div>
+			
+		{% endif %}
+
+	</div>
+
+{% endblock content %}

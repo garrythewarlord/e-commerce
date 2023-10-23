@@ -1,0 +1,22 @@
+{% extends 'home/base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+	<div style="top: 300px; position: relative;" class="container text-center content-section w-50 d-flex align-items-center">
+	<form method="POST">
+		<legend class='border-bottom mb-4'>Register</legend>
+		{% csrf_token %}
+		{{form |crispy}}
+		<button class='btn btn-outline-secondary mt-3 ' type='submit'>Register</button>
+		<p class="mt-4 ">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+	</form>
+
+	</div>
+
+
+
+
+{% endblock content %}
+
